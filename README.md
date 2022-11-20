@@ -7,14 +7,18 @@ Simple Image Augmenter utilizes VHDL for fast image augmenting algorithms. Image
 For scripts, use pip to install argparse and PIL
 
 On terminal :
+```bash
 pip install argparse Pillow
+```
 
 ## Usage
 
 Convert image to txt
 
-On terminal ():
-Path to folder/Simple-Image-Augmenter> python .\scripts\image2txt.py --img .\images\yourimage --txt .\images\textfile
+On terminal (Path to Simple Image Augmenter):
+```bash
+python .\scripts\image2txt.py --img .\images\yourimage --txt .\images\textfile
+```
 
 Example :
 ![alt text](https://github.com/juanjonathan67/Simple-Image-Augmenter/blob/main/image2txtex.png?raw=true)
@@ -22,8 +26,10 @@ Example :
 
 Convert txt to image
 
-On terminal ():
-Path to folder/Simple-Image-Augmenter> python .\scripts\txt2image.py --img .\images\yourimage --txt .\images\textfile --aug .\images\augmentedimage
+On terminal (Path to Simple Image Augmenter):
+```bash
+python .\scripts\txt2image.py --img .\images\yourimage --txt .\images\textfile --aug .\images\augmentedimage
+```
 
 Example :
 ![alt text](https://github.com/juanjonathan67/Simple-Image-Augmenter/blob/main/txt2imageex.png?raw=true)
