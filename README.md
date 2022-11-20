@@ -28,7 +28,7 @@ Convert txt to image
 
 On terminal (Path to Simple Image Augmenter):
 ```bash
-python .\scripts\txt2image.py --img .\images\yourimage --txt .\images\textfile --aug .\images\augmentedimage
+python .\scripts\txt2image.py --aug .\images\augmentedimage --txt .\images\textfile 
 ```
 
 Example :

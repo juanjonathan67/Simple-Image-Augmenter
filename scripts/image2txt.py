@@ -6,6 +6,7 @@ def img2txt(imgpath, txtpath) :
     file = open(txtpath, "w")
     pixel = img.load()
     row, collumn = img.size
+    file.write(str(row) + " " + str(collumn) + "\n")
     for y in range(collumn):
         for x in range(row):
             p = pixel[x, y]
