@@ -3,13 +3,13 @@ from PIL import Image
 
 def txt2img(txtpath, augpath) :
     txt = open(txtpath, "r")
-    row, collumn = txt.readline().split(" ")
+    row, collumn = txt.readline().split(" ", 1)
     row = int(row)
     collumn = int(collumn)
-    gray = Image.new("L", (row, collumn))
+    gray = Image.new("RGB", (row, collumn))
     for y in range(collumn):
         for x in range(row):
-            color = int(txt.readline())
+            color = tuple(map(int, txt.readline().split(" ", 2)))
             gray.putpixel((x, y), color)
     gray.save(augpath, "PNG")
     txt.close()

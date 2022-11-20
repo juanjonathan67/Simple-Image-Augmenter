@@ -2,7 +2,7 @@ from PIL import Image
 import argparse
 
 def img2txt(imgpath, txtpath) :
-    img = Image.open(imgpath).convert("L")
+    img = Image.open(imgpath)
     file = open(txtpath, "w")
     pixel = img.load()
     row, collumn = img.size
@@ -10,7 +10,7 @@ def img2txt(imgpath, txtpath) :
     for y in range(collumn):
         for x in range(row):
             p = pixel[x, y]
-            file.write(str(p) + '\n')
+            file.write(" ".join([str(i) for i in p]) + '\n')
     file.close()
 
 def parse():

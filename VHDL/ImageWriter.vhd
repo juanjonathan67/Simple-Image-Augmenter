@@ -25,7 +25,9 @@ begin
             writeline(output_buf, out_line);
             for i in 1 to wdth loop
                 for j in 1 to height loop
-                    write(out_line, Img(i - 1, j - 1), left, 3);
+                    write(out_line, integer'image(Img(i - 1, j - 1, 2)) & " " & 
+                                    integer'image(Img(i - 1, j - 1, 1)) & " " &
+                                    integer'image(Img(i - 1, j - 1, 0)), left, 11);
                     writeline(output_buf, out_line);
                 end loop;
             end loop;

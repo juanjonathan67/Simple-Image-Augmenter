@@ -16,7 +16,8 @@ architecture rtl of ImageReader is
 begin
     process is
         variable read_line : line;
-        variable pixel : integer;
+        variable red, green, blue : integer;
+        variable spaces : character;
         variable wdth, height : integer;
     begin
         file_open(input_buf, "C:\Users\juanj\OneDrive\Documents\Kuliah\Semester 3\PSD\Praktikum\Proyek Akhir\Simple-Image-Augmenter\images\file.txt", read_mode);
@@ -26,8 +27,14 @@ begin
         for i in 1 to wdth loop
             for j in 1 to height loop
                 readline(input_buf, read_line);
-                read(read_line, pixel);
-                Img(i - 1, j - 1) <= pixel;
+                read(read_line, red);
+                read(read_line, spaces);
+                read(read_line, green);
+                read(read_line, spaces);
+                read(read_line, blue);
+                Img(i - 1, j - 1, 2) <= red;
+                Img(i - 1, j - 1, 1) <= green;
+                Img(i - 1, j - 1, 0) <= blue;
             end loop;
         end loop;
         w <= wdth;
