@@ -74,12 +74,12 @@ package body SimpleImageAugmenter_functions is
                 temp(2) := Img(i - 1, j - 1, 2); -- Storing Red value of the original left side pixels to a temporary array
                 temp(1) := Img(i - 1, j - 1, 1); -- Storing Green value of the original left side pixels to a temporary array
                 temp(0) := Img(i - 1, j - 1, 0); -- Storing Blue value of the original left side pixels to a temporary array
-                Img(i - 1, j - 1, 2) := Img(height - i, j - 1, 2); -- Replacing Red value of the top side pixels with the bottom side pixels
-                Img(i - 1, j - 1, 1) := Img(height - i, j - 1, 1); -- Replacing Green value of the top side pixels with the bottom side pixels
-                Img(i - 1, j - 1, 0) := Img(height - i, j - 1, 0); -- Replacing Blue value of the top side pixels with the bottom side pixels
-                Img(height - i, j - 1, 2) := temp(2); -- Replacing Red value of the bottom side pixels with the temporary array
-                Img(height - i, j - 1, 1) := temp(1); -- Replacing Green value of the bottom side pixels with the temporary array
-                Img(height - i, j - 1, 0) := temp(0); -- Replacing Blue value of the bottom side pixels with the temporary array
+                Img(i - 1, j - 1, 2) <= Img(height - i, j - 1, 2); -- Replacing Red value of the top side pixels with the bottom side pixels
+                Img(i - 1, j - 1, 1) <= Img(height - i, j - 1, 1); -- Replacing Green value of the top side pixels with the bottom side pixels
+                Img(i - 1, j - 1, 0) <= Img(height - i, j - 1, 0); -- Replacing Blue value of the top side pixels with the bottom side pixels
+                Img(height - i, j - 1, 2) <= temp(2); -- Replacing Red value of the bottom side pixels with the temporary array
+                Img(height - i, j - 1, 1) <= temp(1); -- Replacing Green value of the bottom side pixels with the temporary array
+                Img(height - i, j - 1, 0) <= temp(0); -- Replacing Blue value of the bottom side pixels with the temporary array
             end loop;
         end loop;
     end procedure mirrorX;
@@ -98,13 +98,31 @@ package body SimpleImageAugmenter_functions is
                 temp(2) := Img(i - 1, j - 1, 2); -- Storing Red value of the original left side pixels to a temporary array
                 temp(1) := Img(i - 1, j - 1, 1); -- Storing Green value of the original left side pixels to a temporary array
                 temp(0) := Img(i - 1, j - 1, 0); -- Storing Blue value of the original left side pixels to a temporary array
-                Img(i - 1, j - 1, 2) := Img(i - 1, wdth - j, 2); -- Replacing Red value of the left side pixels with the right side pixels
-                Img(i - 1, j - 1, 1) := Img(i - 1, wdth - j, 1); -- Replacing Green value of the left side pixels with the right side pixels
-                Img(i - 1, j - 1, 0) := Img(i - 1, wdth - j, 0); -- Replacing Blue value of the left side pixels with the right side pixels
-                Img(i - 1, wdth - j, 2) := temp(2); -- Replacing Red value of the right side pixels with the temporary array
-                Img(i - 1, wdth - j, 1) := temp(1); -- Replacing Green value of the right side pixels with the temporary array
-                Img(i - 1, wdth - j, 0) := temp(0); -- Replacing Blue value of the right side pixels with the temporary array
+                Img(i - 1, j - 1, 2) <= Img(i - 1, wdth - j, 2); -- Replacing Red value of the left side pixels with the right side pixels
+                Img(i - 1, j - 1, 1) <= Img(i - 1, wdth - j, 1); -- Replacing Green value of the left side pixels with the right side pixels
+                Img(i - 1, j - 1, 0) <= Img(i - 1, wdth - j, 0); -- Replacing Blue value of the left side pixels with the right side pixels
+                Img(i - 1, wdth - j, 2) <= temp(2); -- Replacing Red value of the right side pixels with the temporary array
+                Img(i - 1, wdth - j, 1) <= temp(1); -- Replacing Green value of the right side pixels with the temporary array
+                Img(i - 1, wdth - j, 0) <= temp(0); -- Replacing Blue value of the right side pixels with the temporary array
             end loop;
         end loop;
     end procedure mirrorY;
+    function rotate(
+        constant wdth : integer;
+        constant height : integer;
+        signal img_in : matrix
+    ) return matrix 
+    is 
+        --variable i, j : integer range 0 to 1999; -- counter for height and width
+        variable rot_proc : matrix;
+    begin
+		for i in 1 to height loop
+			for j in 1 to  wdth loop
+				rot_proc(j - 1, height - i, 2) := img_in(i - 1, j - 1, 2);
+				rot_proc(j - 1, height - i, 1) := img_in(i - 1, j - 1, 1);
+				rot_proc(j - 1, height - i, 0) := img_in(i - 1, j - 1, 0);
+			end loop;
+		end loop;
+        return rot_proc;
+    end function rotate; 
 end package body SimpleImageAugmenter_functions;
