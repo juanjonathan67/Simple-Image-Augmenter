@@ -35,13 +35,13 @@ architecture rtl of SimpleImageAugmenter is
 
     signal Img : matrix;
     signal w, h : integer;
-    signal Done : std_logic := '0';
     signal final : matrix;
     signal present, nxt : state_types;
+    signal inputs : std_logic_vector(5 downto 0);
 begin
 
-    Reader : ImageReader port map (Img => Img, w => w, h => h);
-    Writer : ImageWriter port map (w, h, Done, final);
+    Reader : ImageReader port map (Rd, Img, w, h);
+    Writer : ImageWriter port map (w, h, Wr, final);
 
     process (clk) is
     begin
@@ -52,13 +52,35 @@ begin
 
     process (Rd, Wr, Mx, My, Rt, AdBr, Bright) is
     begin
+        inputs <= Rd & Wr & Mx & My & Rt & AdBr;
         case present is
             when S0 =>
-                if(Rd = '1') then
+                if(inputs = "100000") then
                     nxt <= S1;
+                elsif(inputs = "010000") then
+                    nxt <= S2;
+                elsif(inputs = "001000") then
+                    nxt <= S3;
                 end if;
             when S1 =>
-                
+                if(Rd = '1') then
+                    nxt <= S1;
+                else
+                    nxt <= S0;
+                end if;
+            when S2 =>
+                if(Wr = '1') then
+                    nxt <= S2;
+                else
+                    nxt <= S0;
+                end if;
+            when S3 =>
+                if(Mx = '1') then
+                    nxt <= S3;
+                else
+                    mirrorX(w, h, Img);
+                    nxt <= S0;
+                end if;
         end case;
     end process;
 end architecture;
