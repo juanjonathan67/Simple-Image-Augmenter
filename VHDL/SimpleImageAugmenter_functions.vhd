@@ -24,9 +24,9 @@ package SimpleImageAugmenter_functions is
     );
 
     function rotate(
-        constant wdth : in integer; -- width of original image
-        constant height : in integer; -- heigth of original image
-        signal Img : inout matrix -- image to be mirrored      
+        constant wdth : integer; -- width of original image
+        constant height : integer; -- heigth of original image
+        signal Img : matrix -- image to be mirrored      
     ) return matrix;
     
 end package SimpleImageAugmenter_functions;
