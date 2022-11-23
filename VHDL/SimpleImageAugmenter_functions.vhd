@@ -1,9 +1,21 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
+use std.textio.all;
+use ieee.std_logic_textio.all;
 use work.TypeDeclarations.all;
 
 package SimpleImageAugmenter_functions is
+    procedure readImage(
+        signal Img : out matrix;
+        signal w, h : out integer 
+    );
+
+    procedure writeImage(
+        signal wdth, height : in integer;
+        signal Img : in matrix
+    );
+
     procedure adjustBrightness (
         constant bright : in integer range 0 to 200;
         constant wdth : in integer; -- width of original image
@@ -32,6 +44,59 @@ package SimpleImageAugmenter_functions is
 end package SimpleImageAugmenter_functions;
 
 package body SimpleImageAugmenter_functions is
+    procedure readImage(
+        signal Img : out matrix;
+        signal w, h : out integer 
+    ) is
+        file input_buf : text;
+        variable read_line : line;
+        variable red, green, blue : integer;
+        variable spaces : character;
+        variable wdth, height : integer;
+    begin
+        file_open(input_buf, "C:\Users\juanj\OneDrive\Documents\Kuliah\Semester 3\PSD\Praktikum\Proyek Akhir\Simple-Image-Augmenter\images\file.txt", read_mode);
+        -- Read width and height at first row
+        readline(input_buf, read_line);
+        read(read_line, wdth);
+        read(read_line, height);
+        -- Looping according to width and height of image
+        for i in 1 to height loop
+            for j in 1 to wdth loop
+                readline(input_buf, read_line);
+                read(read_line, red); -- Read red channel
+                read(read_line, spaces); -- Read space
+                read(read_line, green); -- Read green channel
+                read(read_line, spaces); -- Read space
+                read(read_line, blue); -- Read blue channel
+                Img(i - 1, j - 1, 2) <= red; 
+                Img(i - 1, j - 1, 1) <= green;
+                Img(i - 1, j - 1, 0) <= blue;
+            end loop;
+        end loop;
+        w <= wdth;
+        h <= height;
+    end procedure readImage;
+
+    procedure writeImage(
+        signal wdth, height : in integer;
+        signal Img : in matrix
+    ) is
+        file output_buf : text;
+        variable out_line : line;
+    begin
+        file_open(output_buf, "C:\Users\juanj\OneDrive\Documents\Kuliah\Semester 3\PSD\Praktikum\Proyek Akhir\Simple-Image-Augmenter\VHDL\file.txt", write_mode);
+        write(out_line, integer'image(wdth) & " " & integer'image(height), left, 10); -- Write width and height first
+        writeline(output_buf, out_line);
+        for i in 1 to height loop
+            for j in 1 to wdth loop
+                write(out_line, integer'image(Img(i - 1, j - 1, 2)) & " " & 
+                                integer'image(Img(i - 1, j - 1, 1)) & " " &
+                                integer'image(Img(i - 1, j - 1, 0)), left, 11); -- Write R G B
+                writeline(output_buf, out_line);
+            end loop;
+        end loop;
+    end procedure writeImage;
+
     procedure adjustBrightness (
         constant bright : in integer range 0 to 200;
         constant wdth : in integer; -- width of original image
