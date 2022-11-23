@@ -6,6 +6,7 @@ use work.TypeDeclarations.all;
 
 entity ImageReader is
     port (
+        Rd : in std_logic;
         Img : out matrix;
         w, h : out Integer
     );
@@ -20,27 +21,29 @@ begin
         variable spaces : character;
         variable wdth, height : integer;
     begin
-        file_open(input_buf, "C:\Users\juanj\OneDrive\Documents\Kuliah\Semester 3\PSD\Praktikum\Proyek Akhir\Simple-Image-Augmenter\images\file.txt", read_mode);
-        -- Read width and height at first row
-        readline(input_buf, read_line);
-        read(read_line, wdth);
-        read(read_line, height);
-        -- Looping according to width and height of image
-        for i in 1 to height loop
-            for j in 1 to wdth loop
-                readline(input_buf, read_line);
-                read(read_line, red); -- Read red channel
-                read(read_line, spaces); -- Read space
-                read(read_line, green); -- Read green channel
-                read(read_line, spaces); -- Read space
-                read(read_line, blue); -- Read blue channel
-                Img(i - 1, j - 1, 2) <= red; 
-                Img(i - 1, j - 1, 1) <= green;
-                Img(i - 1, j - 1, 0) <= blue;
+        if(Rd = '1') then
+            file_open(input_buf, "C:\Users\juanj\OneDrive\Documents\Kuliah\Semester 3\PSD\Praktikum\Proyek Akhir\Simple-Image-Augmenter\images\file.txt", read_mode);
+            -- Read width and height at first row
+            readline(input_buf, read_line);
+            read(read_line, wdth);
+            read(read_line, height);
+            -- Looping according to width and height of image
+            for i in 1 to height loop
+                for j in 1 to wdth loop
+                    readline(input_buf, read_line);
+                    read(read_line, red); -- Read red channel
+                    read(read_line, spaces); -- Read space
+                    read(read_line, green); -- Read green channel
+                    read(read_line, spaces); -- Read space
+                    read(read_line, blue); -- Read blue channel
+                    Img(i - 1, j - 1, 2) <= red; 
+                    Img(i - 1, j - 1, 1) <= green;
+                    Img(i - 1, j - 1, 0) <= blue;
+                end loop;
             end loop;
-        end loop;
-        w <= wdth;
-        h <= height;
+            w <= wdth;
+            h <= height;
+        end if;
         wait;
     end process;
 end architecture;
