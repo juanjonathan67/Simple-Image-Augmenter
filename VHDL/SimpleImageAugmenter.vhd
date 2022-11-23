@@ -30,7 +30,6 @@ begin
     Writer : ImageWriter port map (w, h, Done, Img);
     process is
     begin
-        wait for 100 ns;
-        Done <= '1';
+        wait until (Done = '1');
     end process;
 end architecture;

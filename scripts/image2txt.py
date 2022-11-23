@@ -7,8 +7,8 @@ def img2txt(imgpath, txtpath) :
     pixel = img.load()
     row, collumn = img.size
     file.write(str(row) + " " + str(collumn) + "\n")
-    for y in range(collumn):
-        for x in range(row):
+    for x in range(row):
+        for y in range(collumn):
             p = pixel[x, y]
             file.write(" ".join([str(i) for i in p]) + '\n')
     file.close()

@@ -21,13 +21,13 @@ begin
     begin
         if(Done = '1') then
             file_open(output_buf, "C:\Users\juanj\OneDrive\Documents\Kuliah\Semester 3\PSD\Praktikum\Proyek Akhir\Simple-Image-Augmenter\VHDL\file.txt", write_mode);
-            write(out_line, integer'image(wdth) & " " & integer'image(height), left, 10);
+            write(out_line, integer'image(wdth) & " " & integer'image(height), left, 10); -- Write width and height first
             writeline(output_buf, out_line);
-            for i in 1 to wdth loop
-                for j in 1 to height loop
+            for i in 1 to height loop
+                for j in 1 to wdth loop
                     write(out_line, integer'image(Img(i - 1, j - 1, 2)) & " " & 
                                     integer'image(Img(i - 1, j - 1, 1)) & " " &
-                                    integer'image(Img(i - 1, j - 1, 0)), left, 11);
+                                    integer'image(Img(i - 1, j - 1, 0)), left, 11); -- Write R G B
                     writeline(output_buf, out_line);
                 end loop;
             end loop;
