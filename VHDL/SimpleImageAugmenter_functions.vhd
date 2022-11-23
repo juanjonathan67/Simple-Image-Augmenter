@@ -16,6 +16,14 @@ package SimpleImageAugmenter_functions is
         signal unmirrored : in matrix -- original image
     ) return matrix;
 
+    procedure adjustBrightness (
+        constant bright : in integer range 0 to 200;
+        constant wdth : in integer; -- width of original image
+        constant height : in integer; -- heigth of original image
+        signal Img : inout matrix -- original image
+    );
+        
+
 end package SimpleImageAugmenter_functions;
 
 package body SimpleImageAugmenter_functions is
@@ -71,5 +79,40 @@ package body SimpleImageAugmenter_functions is
             end loop;
         end loop;
         return mirrored;
-    end function MirrorX;    
+    end function MirrorX;  
+    
+    procedure adjustBrightness (
+        constant bright : in integer range 0 to 200;
+        constant wdth : in integer; -- width of original image
+        constant height : in integer; -- heigth of original image
+        signal Img : inout matrix -- original image
+    ) is
+        variable i : integer range 0 to 1999;
+    begin
+        for i in height loop
+            for j in wdth loop
+                if(Img(i - 1, j - 1, 2) = 0 and bright /= 0) then
+                    Img(i - 1, j - 1, 2) <= 1;
+                end if;
+                if(Img(i - 1, j - 1, 1) = 0 and bright /= 0) then
+                    Img(i - 1, j - 1, 1) <= 1;
+                end if;
+                if(Img(i - 1, j - 1, 0) = 0 and bright /= 0) then
+                    Img(i - 1, j - 1, 0) <= 1;
+                end if;
+                Img(i - 1, j - 1, 2) <= Img(i - 1, j - 1, 2) * bright / 100;
+                Img(i - 1, j - 1, 1) <= Img(i - 1, j - 1, 1) * bright / 100;
+                Img(i - 1, j - 1, 0) <= Img(i - 1, j - 1, 0) * bright / 100;
+                if(Img(i - 1, j - 1, 2) > 255) then
+                    Img(i - 1, j - 1, 2) <= 255;
+                end if;
+                if(Img(i - 1, j - 1, 1) > 255) then
+                    Img(i - 1, j - 1, 1) <= 255;
+                end if;
+                if(Img(i - 1, j - 1, 0) > 255) then
+                    Img(i - 1, j - 1, 0) <= 255;
+                end if;
+            end loop;
+        end loop;
+    end procedure;
 end package body SimpleImageAugmenter_functions;
