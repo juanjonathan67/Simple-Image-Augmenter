@@ -54,7 +54,7 @@ begin
     begin
         inputs <= Rd & Wr & Mx & My & Rt & AdBr;
         case present is
-            when S0 =>
+            when S0 => -- Wait for Input
                 if(inputs = "100000") then
                     nxt <= S1;
                 elsif(inputs = "010000") then
@@ -62,25 +62,48 @@ begin
                 elsif(inputs = "001000") then
                     nxt <= S3;
                 end if;
-            when S1 =>
+            when S1 => -- Read Image
                 if(Rd = '1') then
                     nxt <= S1;
                 else
                     nxt <= S0;
                 end if;
-            when S2 =>
-                if(Wr = '1') then
-                    nxt <= S2;
-                else
-                    nxt <= S0;
-                end if;
-            when S3 =>
+            when S2 => -- Mirror X
                 if(Mx = '1') then
-                    nxt <= S3;
+                    nxt <= S2;
                 else
                     mirrorX(w, h, Img);
                     nxt <= S0;
                 end if;
+            when S3 => -- Mirror Y
+                if(My = '1') then
+                    nxt <= S3;
+                else
+                    mirrorY(w, h, Img);
+                    nxt <= S0;
+                end if;
+            when S4 => -- Rotate
+                if(Rt = '1') then
+                    nxt <= S4;
+                else
+                    Img <= rotate(w, h, Img);
+                    nxt <= S0;
+                end if;
+            when S5 => -- Add Brightness
+                if (AdBr = '1') then
+                    nxt <= S5;
+                else
+                    adjustBrightness(Bright, w, h, Img);
+                    nxt <= S0;
+                end if;
+            when S6 => -- Write Image
+                if(Wr = '1') then
+                    nxt <= S6;
+                else
+                    nxt <= S0;
+                end if;
+            when others =>
+                nxt <= S0;
         end case;
     end process;
 end architecture;
