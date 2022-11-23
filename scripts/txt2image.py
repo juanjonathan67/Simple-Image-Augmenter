@@ -7,8 +7,8 @@ def txt2img(txtpath, augpath) :
     row = int(row)
     collumn = int(collumn)
     gray = Image.new("RGB", (row, collumn))
-    for x in range(row):
-        for y in range(collumn):
+    for y in range(collumn):
+        for x in range(row):
             color = tuple(map(int, txt.readline().split(" ", 2)))
             gray.putpixel((x, y), color)
     gray.save(augpath, "PNG")

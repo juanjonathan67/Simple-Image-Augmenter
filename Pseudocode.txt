@@ -1,0 +1,62 @@
+LOAD
+WRITE
+MirrorX
+
+type temp is array(2 to 0) of Integer 0 255
+variable RGB : temp
+for j in 1 to width
+	for i in 1 to height / 2
+		temp(2) := Img(i - 1, j - 1, 2)
+		temp(1) := Img(i - 1, j - 1, 1)
+		temp(0) := Img(i - 1, j - 1, 0)
+		Img(i - 1, j - 1, 2) := Img(height - i, j - 1, 2)
+		Img(i - 1, j - 1, 1) := Img(height - i, j - 1, 1)
+		Img(i - 1, j - 1, 0) := Img(height - i, j - 1, 0)
+		Img(height - i, j - 1, 2) := temp(2)
+		Img(height - i, j - 1, 1) := temp(1)
+		Img(height - i, j - 1, 0) := temp(0)
+	end loop
+end loop
+
+MirrorY
+
+
+type temp is array(2 to 0) of Integer 0 255
+variable RGB : temp
+for i in 1 to height
+	for j in 1 to width / 2
+		temp(2) := Img(i - 1, j - 1, 2)
+		temp(1) := Img(i - 1, j - 1, 1)
+		temp(0) := Img(i - 1, j - 1, 0)
+		Img(i - 1, j - 1, 2) := Img(i - 1, width -j, 2)
+		Img(i - 1, j - 1, 1) := Img(i - 1, width -j, 1)
+		Img(i - 1, j - 1, 0) := Img(i - 1, width -j, 0)
+		Img(i - 1, width -j, 2) := temp(2)
+		Img(i - 1, width -j, 1) := temp(1)
+		Img(i - 1, width -j, 0) := temp(0)
+	end loop
+end loop
+
+Brightness
+variable temp is array(2 to 0) of Integer 0 255
+variable RGB is temp
+for i in 1 to height
+	for j in 1 to width
+		RGB(2) = Img(i - 1, j - 1, 2) * bright / 100
+
+127 x 120 = 15240 / 100 = 152.4 --> 152
+
+Rotate
+(0,0) --> (0, height)
+(0, width) --> (width, height)
+(height, width) --> (width, 0)
+(height, 0) --> (0, 0)
+. . . . 
+. . . .
+. . . .
+
+variable Img2 : matrix;
+for i in 1 to height
+	for j in 1 to width
+		Img2(j - 1, height - i) = Img(i - 1, j - 1)
+		
