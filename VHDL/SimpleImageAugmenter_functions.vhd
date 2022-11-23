@@ -4,83 +4,27 @@ use ieee.numeric_std.all;
 use work.TypeDeclarations.all;
 
 package SimpleImageAugmenter_functions is
-    function mirrorY(
-        constant wdth : in integer; -- width of original image
-        constant height : in integer; -- heigth of original image
-        signal unmirrored : in matrix -- original image
-    ) return matrix;
-
-    function mirrorX(
-        constant wdth : in integer; -- width of original image
-        constant height : in integer; -- heigth of original image
-        signal unmirrored : in matrix -- original image
-    ) return matrix;
-
     procedure adjustBrightness (
         constant bright : in integer range 0 to 200;
         constant wdth : in integer; -- width of original image
         constant height : in integer; -- heigth of original image
         signal Img : inout matrix -- original image
     );
-        
 
+    procedure mirrorY(
+        constant wdth : in integer; -- width of original image
+        constant height : in integer; -- heigth of original image
+        signal Img : inout matrix -- image to be mirrored
+    );
+
+    procedure mirrorX(
+        constant wdth : in integer; -- width of original image
+        constant height : in integer; -- heigth of original image
+        signal Img : inout matrix -- image to be mirrored
+    );
 end package SimpleImageAugmenter_functions;
 
 package body SimpleImageAugmenter_functions is
-    function mirrorY(
-        constant wdth : in integer;
-        constant height : in integer;
-        signal unmirrored : inout matrix
-    ) return matrix is 
-        variable i, j : integer range 0 to 1999; -- counter for height and width
-        -- variable mirrored : matrix; -- mirrored image to be returned
-    begin
-        mirrored := unmirrored;
-        i := height;
-        j := wdth;
-        for i in 1 to height loop
-            for j in 1 to wdth / 2 loop
-                temp(2) := unmirrored(i - 1, j - 1, 2);
-                temp(1) := unmirrored(i - 1, j - 1, 1);
-                temp(0) := unmirrored(i - 1, j - 1, 0);
-                mirrored(i - 1, j - 1, 2) := unmirrored(i - 1, wdth - j, 2); -- Storing Red value of the original right side pixels to the new left side pixels
-                mirrored(i - 1, j - 1, 1) := unmirrored(i - 1, wdth - j, 1); -- Storing Green value of the original right side pixels to the new left side pixels
-                mirrored(i - 1, j - 1, 0) := unmirrored(i - 1, wdth - j, 0); -- Storing Blue value of the original right side pixels to the new left side pixels
-                mirrored(i - 1, wdth - j, 2) := temp(2); -- Storing Red value of the original left side pixels to the new right side pixels
-                mirrored(i - 1, wdth - j, 1) := temp(1); -- Storing Green value of the original left side pixels to the new right side pixels
-                mirrored(i - 1, wdth - j, 0) := temp(0); -- Storing Blue value of the original left side pixels to the new right side pixels
-            end loop;
-        end loop;
-        return mirrored;
-    end function mirrorY;
-
-    function mirrorX(
-        constant wdth : in integer;
-        constant height : in integer;
-        signal unmirrored : inout matrix
-    ) return matrix is 
-        variable i, j : integer range 0 to 1999; -- counter for height and width
-        -- variable mirrored : matrix; -- mirrored image to be returned
-    begin
-        mirrored := unmirrored;
-        i := height;
-        j := wdth;
-        for j in 1 to wdth loop
-            for i in 1 to height / 2 loop
-                temp(2) := unmirrored(i - 1, j - 1, 2);
-                temp(1) := unmirrored(i - 1, j - 1, 1);
-                temp(0) := unmirrored(i - 1, j - 1, 0);
-                mirrored(i - 1, j - 1, 2) := unmirrored(height - i, j - 1, 2); -- Storing Red value of the original top side pixels to the new bottom side pixels
-                mirrored(i - 1, j - 1, 1) := unmirrored(height - i, j - 1, 1); -- Storing Green value of the original top side pixels to the new bottom side pixels
-                mirrored(i - 1, j - 1, 0) := unmirrored(height - i, j - 1, 0); -- Storing Blue value of the original top side pixels to the new bottom side pixels
-                mirrored(height - i, j - 1, 2) := temp(2); -- Storing Red value of the original bottom side pixels to the new top side pixels
-                mirrored(height - i, j - 1, 1) := temp(1); -- Storing Green value of the original bottom side pixels to the new top side pixels
-                mirrored(height - i, j - 1, 0) := temp(0); -- Storing Blue value of the original bottom side pixels to the new top side pixels
-            end loop;
-        end loop;
-        return mirrored;
-    end function MirrorX;  
-    
     procedure adjustBrightness (
         constant bright : in integer range 0 to 200;
         constant wdth : in integer; -- width of original image
@@ -89,8 +33,8 @@ package body SimpleImageAugmenter_functions is
     ) is
         variable i : integer range 0 to 1999;
     begin
-        for i in height loop
-            for j in wdth loop
+        for i in 1 to height loop
+            for j in 1 to wdth loop
                 if(Img(i - 1, j - 1, 2) = 0 and bright /= 0) then
                     Img(i - 1, j - 1, 2) <= 1;
                 end if;
@@ -115,4 +59,52 @@ package body SimpleImageAugmenter_functions is
             end loop;
         end loop;
     end procedure;
+    
+    procedure mirrorX(
+        constant wdth : in integer;
+        constant height : in integer;
+        signal Img : inout matrix
+    ) is 
+        type RGB is array(2 downto 0) of Integer range 0 to 255; -- type declaration for array of RGB values
+        variable i, j : integer range 0 to 1999; -- counter for height and width
+        variable temp : RGB; -- temporary variable to store RGB values
+    begin
+        for j in 1 to wdth loop
+            for i in 1 to height / 2 loop
+                temp(2) := Img(i - 1, j - 1, 2); -- Storing Red value of the original left side pixels to a temporary array
+                temp(1) := Img(i - 1, j - 1, 1); -- Storing Green value of the original left side pixels to a temporary array
+                temp(0) := Img(i - 1, j - 1, 0); -- Storing Blue value of the original left side pixels to a temporary array
+                Img(i - 1, j - 1, 2) := Img(height - i, j - 1, 2); -- Replacing Red value of the top side pixels with the bottom side pixels
+                Img(i - 1, j - 1, 1) := Img(height - i, j - 1, 1); -- Replacing Green value of the top side pixels with the bottom side pixels
+                Img(i - 1, j - 1, 0) := Img(height - i, j - 1, 0); -- Replacing Blue value of the top side pixels with the bottom side pixels
+                Img(height - i, j - 1, 2) := temp(2); -- Replacing Red value of the bottom side pixels with the temporary array
+                Img(height - i, j - 1, 1) := temp(1); -- Replacing Green value of the bottom side pixels with the temporary array
+                Img(height - i, j - 1, 0) := temp(0); -- Replacing Blue value of the bottom side pixels with the temporary array
+            end loop;
+        end loop;
+    end procedure mirrorX;
+    
+    procedure mirrorY(
+        constant wdth : in integer;
+        constant height : in integer;
+        signal Img : inout matrix
+    ) is 
+        type RGB is array(2 downto 0) of Integer range 0 to 255; -- type declaration for array of RGB values
+        variable i, j : integer range 0 to 1999; -- counter for height and width
+        variable temp : RGB; -- temporary variable to store RGB values
+    begin
+        for i in 1 to height loop
+            for j in 1 to wdth / 2 loop
+                temp(2) := Img(i - 1, j - 1, 2); -- Storing Red value of the original left side pixels to a temporary array
+                temp(1) := Img(i - 1, j - 1, 1); -- Storing Green value of the original left side pixels to a temporary array
+                temp(0) := Img(i - 1, j - 1, 0); -- Storing Blue value of the original left side pixels to a temporary array
+                Img(i - 1, j - 1, 2) := Img(i - 1, wdth - j, 2); -- Replacing Red value of the left side pixels with the right side pixels
+                Img(i - 1, j - 1, 1) := Img(i - 1, wdth - j, 1); -- Replacing Green value of the left side pixels with the right side pixels
+                Img(i - 1, j - 1, 0) := Img(i - 1, wdth - j, 0); -- Replacing Blue value of the left side pixels with the right side pixels
+                Img(i - 1, wdth - j, 2) := temp(2); -- Replacing Red value of the right side pixels with the temporary array
+                Img(i - 1, wdth - j, 1) := temp(1); -- Replacing Green value of the right side pixels with the temporary array
+                Img(i - 1, wdth - j, 0) := temp(0); -- Replacing Blue value of the right side pixels with the temporary array
+            end loop;
+        end loop;
+    end procedure mirrorY;
 end package body SimpleImageAugmenter_functions;
