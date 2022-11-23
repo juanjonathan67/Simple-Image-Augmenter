@@ -22,6 +22,13 @@ package SimpleImageAugmenter_functions is
         constant height : in integer; -- heigth of original image
         signal Img : inout matrix -- image to be mirrored
     );
+
+    function rotate(
+        constant wdth : in integer; -- width of original image
+        constant height : in integer; -- heigth of original image
+        signal Img : inout matrix -- image to be mirrored      
+    ) return matrix;
+    
 end package SimpleImageAugmenter_functions;
 
 package body SimpleImageAugmenter_functions is
@@ -107,6 +114,7 @@ package body SimpleImageAugmenter_functions is
             end loop;
         end loop;
     end procedure mirrorY;
+
     function rotate(
         constant wdth : integer;
         constant height : integer;
