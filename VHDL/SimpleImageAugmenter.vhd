@@ -20,6 +20,7 @@ end entity SimpleImageAugmenter;
 architecture rtl of SimpleImageAugmenter is
     component ImageReader is
         port (
+            Rd : in std_logic;
             Img : out matrix;
             w, h : out Integer
         );
