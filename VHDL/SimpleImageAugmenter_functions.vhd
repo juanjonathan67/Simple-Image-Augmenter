@@ -107,4 +107,22 @@ package body SimpleImageAugmenter_functions is
             end loop;
         end loop;
     end procedure mirrorY;
+    function rotate(
+        constant wdth : integer;
+        constant height : integer;
+        signal img_in : matrix
+    ) return matrix 
+    is 
+        --variable i, j : integer range 0 to 1999; -- counter for height and width
+        variable rot_proc : matrix;
+    begin
+		for i in 1 to height loop
+			for j in 1 to  wdth loop
+				rot_proc(j - 1, height - i, 2) := img_in(i - 1, j - 1, 2);
+				rot_proc(j - 1, height - i, 1) := img_in(i - 1, j - 1, 1);
+				rot_proc(j - 1, height - i, 0) := img_in(i - 1, j - 1, 0);
+			end loop;
+		end loop;
+        return rot_proc;
+    end function rotate; 
 end package body SimpleImageAugmenter_functions;
