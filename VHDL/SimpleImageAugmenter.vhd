@@ -51,6 +51,7 @@ begin
     end process;
 
     process (Rd, Wr, Mx, My, Rt, AdBr, Bright) is
+    variable tmp: integer;
     begin
         inputs <= Rd & Mx & My & Rt & AdBr & Wr;
         case present is
@@ -113,6 +114,9 @@ begin
             when S6 => -- Write Image
                 if(Wr = '0') then
                     writeImage(w, h, Img);
+                    tmp := w;
+                    w <= h;
+                    h <= tmp;
                     nxt <= S0;
                 end if;
             when others =>
