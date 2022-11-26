@@ -42,7 +42,21 @@ variable temp is array(2 to 0) of Integer 0 255
 variable RGB is temp
 for i in 1 to height
 	for j in 1 to width
+		if(RGB(2) = 0) then
+			RGB(2) := 1
+		if(RGB(2) = 0) then
+			RGB(2) := 1
+		if(RGB(2) = 0) then
+			RGB(2) := 1
 		RGB(2) = Img(i - 1, j - 1, 2) * bright / 100
+		RGB(1) = Img(i - 1, j - 1, 1) * bright / 100
+		RGB(0) = Img(i - 1, j - 1, 0) * bright / 100
+		if(RGB(2) > 255) then
+			RGB(2) := 255
+		if(RGB(1) > 255) then
+			RGB(1) := 255
+		if(RGB(0) > 255) then
+			RGB(0) := 255
 
 127 x 120 = 15240 / 100 = 152.4 --> 152
 

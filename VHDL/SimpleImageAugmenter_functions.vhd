@@ -34,7 +34,7 @@ package SimpleImageAugmenter_functions is
         constant height : in integer; -- heigth of original image
         signal Img : inout matrix -- image to be mirrored
     );
-
+        
     function rotate(
         constant wdth : integer; -- width of original image
         constant height : integer; -- heigth of original image
@@ -178,7 +178,44 @@ package body SimpleImageAugmenter_functions is
                 Img(i - 1, wdth - j, 0) <= temp(0); -- Replacing Blue value of the right side pixels with the temporary array
             end loop;
         end loop;
-    end procedure mirrorY;
+    end procedure mirrorX;
+
+    procedure adjustBrightness (
+        constant bright : in integer range 0 to 200;
+        constant wdth : in integer;
+        constant height : in integer;
+        signal Img : inout matrix
+    ) is
+        type RGB is array(2 downto 0) of integer range 0 to 255;
+        variable i, j : integer range 0 to 1999;
+        variable temp : RGB;
+    begin
+        for i in 1 to height loop
+            for j in 1 to wdth loop
+                if(RGB(2) = 0) then
+                    RGB(2) := 1;
+                end if;
+                if(RGB(2) = 0) then
+                    RGB(2) := 1;
+                end if;
+                if(RGB(2) = 0) then
+                    RGB(2) := 1;
+                end if;
+                RGB(2) := Img(i - 1, j - 1, 2) * bright / 100;
+                RGB(1) := Img(i - 1, j - 1, 1) * bright / 100;
+                RGB(0) := Img(i - 1, j - 1, 0) * bright / 100;
+                if(RGB(2) > 255) then
+                    RGB(2) := 255;
+                end if;
+                if(RGB(1) > 255) then
+                    RGB(1) := 255;
+                end if;
+                if(RGB(0) > 255) then
+                    RGB(0) := 255;
+                end if;
+            end loop;
+        end loop;
+    end procedure;
 
     function rotate(
         constant wdth : integer;
