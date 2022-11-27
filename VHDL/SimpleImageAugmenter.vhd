@@ -12,7 +12,7 @@ entity SimpleImageAugmenter is
         My : in std_logic := '0'; -- Mirror-Y
         Rt : in std_logic := '0'; -- Rotate
         AdBr : in std_logic := '0'; -- Adjust Brightness
-        Bright : in integer range 0 to 200; -- Brightness value
+        Bright : in integer; -- Brightness value %
         clk : in std_logic
     );
 end entity SimpleImageAugmenter;
@@ -103,7 +103,10 @@ begin
                 end if;
             when S4 => -- Rotate
                 if(Rt = '0') then
-                    Img <= rotate(w, h, Img);
+                    rotate(w, h, Img);
+                    tmp := w;
+                    w <= h;
+                    h <= tmp;
                     nxt <= S0;
                 end if;
             when S5 => -- Add Brightness
@@ -114,9 +117,6 @@ begin
             when S6 => -- Write Image
                 if(Wr = '0') then
                     writeImage(w, h, Img);
-                    tmp := w;
-                    w <= h;
-                    h <= tmp;
                     nxt <= S0;
                 end if;
             when others =>
