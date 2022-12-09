@@ -39,7 +39,7 @@ architecture rtl of SimpleImageAugmenter is
     -- end component ImageWriter;
 
     signal Img : matrix;
-    signal w, h : integer;
+    signal w, h : integer := 0;
     signal present, nxt : state_types;
     signal inputs : std_logic_vector(5 downto 0);
 begin
@@ -54,7 +54,7 @@ begin
         end if;
     end process;
 
-    process (Rd, Wr, Mx, My, Rt, AdBr, Bright) is
+    process (Rd, Wr, Mx, My, Rt, AdBr, Bright, clk) is
     variable tmp: integer;
     begin
         inputs <= Rd & Mx & My & Rt & AdBr & Wr;
@@ -96,7 +96,7 @@ begin
             when S1 => -- Read Image
                 if(Rd = '0') then
                     readImage(Img, w, h);
-                    nxt <= S0;
+                    nxt <= S0;	
                 end if;
             when S2 => -- Mirror X
                 if(Mx = '0') then
