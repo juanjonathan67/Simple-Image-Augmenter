@@ -54,7 +54,7 @@ package body SimpleImageAugmenter_functions is
         variable spaces : character;
         variable wdth, height : integer;
     begin
-        file_open(input_buf, "C:\Users\juanj\OneDrive\Documents\Kuliah\Semester 3\PSD\Praktikum\Proyek Akhir\Simple-Image-Augmenter\images\file.txt", read_mode);
+        file_open(input_buf, "testbench/smallimage.txt", read_mode);
         -- Read width and height at first row
         readline(input_buf, read_line);
         read(read_line, wdth);

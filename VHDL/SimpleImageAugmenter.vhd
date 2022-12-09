@@ -1,6 +1,8 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
+use std.textio.all;
+use ieee.std_logic_textio.all;
 use work.TypeDeclarations.all;
 use work.SimpleImageAugmenter_functions.all;
 
@@ -12,8 +14,10 @@ entity SimpleImageAugmenter is
         My : in std_logic := '0'; -- Mirror-Y
         Rt : in std_logic := '0'; -- Rotate
         AdBr : in std_logic := '0'; -- Adjust Brightness
-        Bright : in integer; -- Brightness value %
-        clk : in std_logic
+        Bright : in integer := 110; -- Brightness value % (Ex: 10% inc is 110)
+        clk : in std_logic;
+        -- TB-related port
+        RESULT: out matrix
     );
 end entity SimpleImageAugmenter;
 
@@ -71,6 +75,9 @@ begin
                 -- else
                 --     nxt <= present;
                 -- end if;
+                
+                Result <= Img;
+                
                 if(inputs = "100000") then
                     nxt <= S1;
                 elsif(inputs = "010000") then
