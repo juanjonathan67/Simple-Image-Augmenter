@@ -54,7 +54,7 @@ package body SimpleImageAugmenter_functions is
         variable spaces : character;
         variable wdth, height : integer;
     begin
-        file_open(input_buf, "C:\Users\juanj\OneDrive\Documents\Kuliah\Semester 3\PSD\Praktikum\Proyek Akhir\Simple-Image-Augmenter\images\file.txt", read_mode);
+        file_open(input_buf, "testbench/smallimage.txt", read_mode);
         -- Read width and height at first row
         readline(input_buf, read_line);
         read(read_line, wdth);
@@ -84,7 +84,7 @@ package body SimpleImageAugmenter_functions is
         file output_buf : text;
         variable out_line : line;
     begin
-        file_open(output_buf, "C:\Users\juanj\OneDrive\Documents\Kuliah\Semester 3\PSD\Praktikum\Proyek Akhir\Simple-Image-Augmenter\VHDL\file.txt", write_mode);
+        file_open(output_buf, "testbench/out.txt", write_mode);
         write(out_line, integer'image(wdth) & " " & integer'image(height), left, 10); -- Write width and height first
         writeline(output_buf, out_line);
         for i in 1 to height loop

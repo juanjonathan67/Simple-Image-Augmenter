@@ -1,0 +1,53 @@
+/home/airev/Kuliah/PSD/Simple-Image-Augmenter/VHDL/SimpleImageAugmenter.vhd {1 {vcom -work libsia -2002 -explicit -stats=none /home/airev/Kuliah/PSD/Simple-Image-Augmenter/VHDL/SimpleImageAugmenter.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package std_logic_textio
+-- Loading package TypeDeclarations
+-- Loading package SimpleImageAugmenter_functions
+-- Compiling entity SimpleImageAugmenter
+-- Compiling architecture rtl of SimpleImageAugmenter
+
+} {} {}} /home/airev/Kuliah/PSD/Simple-Image-Augmenter/VHDL/SimpleImageAugmenter_functions.vhd {1 {vcom -work libsia -2002 -explicit -stats=none /home/airev/Kuliah/PSD/Simple-Image-Augmenter/VHDL/SimpleImageAugmenter_functions.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Loading package std_logic_textio
+-- Loading package TypeDeclarations
+-- Compiling package SimpleImageAugmenter_functions
+-- Compiling package body SimpleImageAugmenter_functions
+-- Loading package SimpleImageAugmenter_functions
+
+} {} {}} /home/airev/Kuliah/PSD/Simple-Image-Augmenter/VHDL/ImageReader.vhd {1 {vcom -work libsia -2002 -explicit -stats=none /home/airev/Kuliah/PSD/Simple-Image-Augmenter/VHDL/ImageReader.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package std_logic_textio
+-- Loading package TypeDeclarations
+-- Compiling entity ImageReader
+-- Compiling architecture rtl of ImageReader
+
+} {} {}} /home/airev/Kuliah/PSD/Simple-Image-Augmenter/VHDL/TypeDeclarations.vhd {1 {vcom -work libsia -2002 -explicit -stats=none /home/airev/Kuliah/PSD/Simple-Image-Augmenter/VHDL/TypeDeclarations.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling package TypeDeclarations
+
+} {} {}} /home/airev/Kuliah/PSD/Simple-Image-Augmenter/VHDL/ImageWriter.vhd {1 {vcom -work libsia -2002 -explicit -stats=none /home/airev/Kuliah/PSD/Simple-Image-Augmenter/VHDL/ImageWriter.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package std_logic_textio
+-- Loading package TypeDeclarations
+-- Loading package NUMERIC_STD
+-- Compiling entity ImageWriter
+-- Compiling architecture rtl of ImageWriter
+
+} {} {}}
