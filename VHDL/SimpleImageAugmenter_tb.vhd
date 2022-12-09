@@ -21,7 +21,9 @@ architecture tb_arch of tb is
 			Bright : in integer := 110; -- Brightness value % (Ex: 10% inc is 110)
 			clk : in std_logic;
 			-- TB-related ports
-			RESULT: out matrix
+			RES: out matrix;
+			RES_W: out integer;
+			RES_H: out integer
 		);
 	end component;
 	
@@ -60,19 +62,41 @@ architecture tb_arch of tb is
     end procedure readImage;
     
     procedure verify(
-		signal testImg : in matrix;
-		variable path_toCorrect: in matrix;
-		variable wdth, height : integer
+		variable TST_IMG : matrix;
+		variable TST_W : integer;
+		variable TST_H : integer;
+		variable COR_PATH : in line
     ) is
+		variable COR_IMG : matrix;
+		variable COR_W : integer;
+		variable COR_H : integer;
     begin
-		--for i in 1 to height loop
-          --  for j in 1 to wdth loop
-			--	assert(testImg(i - 1, j - 1, 2) = correct(i - 1, j - 1, 2) and
-				--		testImg(i - 1, j - 1, 2) = correct(i - 1, j - 1, 1) and
-					--	testImg(i - 1, j - 1, 2) = correct(i - 1, j - 1, 0))
-				--report "Test gagal" severity error;
-			--end loop;
-		--end loop;
+		readImage(COR_PATH, COR_IMG, COR_W, COR_H);
+		
+		assert((COR_W = TST_W) and (COR_H = TST_H))
+			report "Size Check: GAGAL" & CR & LF &
+					"Expected: " & integer'image(COR_H) & "x" & integer'image(COR_W) & CR & LF &
+					"Got: " & integer'image(TST_H) & "x" & integer'image(TST_W)
+					severity error;
+		
+		for i in 1 to COR_H loop
+          for j in 1 to COR_W loop
+			assert((TST_IMG(i - 1, j - 1, 2) /= COR_IMG(i - 1, j - 1, 2) and
+					TST_IMG(i - 1, j - 1, 1) /= COR_IMG(i - 1, j - 1, 1)) and
+					TST_IMG(i - 1, j - 1, 0) /= COR_IMG(i - 1, j - 1, 0))
+				report "Pixel Check: GAGAL" & CR & LF &
+						"In: " & integer'image(i) & "," & integer'image(j) & CR & LF &
+						
+						"Expected: " & integer'image(COR_IMG(i - 1, j - 1, 0)) & " " 
+										& integer'image(COR_IMG(i - 1, j - 1, 1)) & " "
+										& integer'image(COR_IMG(i - 1, j - 1, 2)) & CR & LF &
+										
+						"Got: " & integer'image(TST_IMG(i - 1, j - 1, 0)) & " " 
+								& integer'image(TST_IMG(i - 1, j - 1, 1)) & " "
+								& integer'image(TST_IMG(i - 1, j - 1, 2))
+						severity error;
+			end loop;
+		end loop;
     end procedure;
     
 	signal Rd : std_logic := '0'; -- Read
@@ -83,11 +107,9 @@ architecture tb_arch of tb is
 	signal AdBr : std_logic := '0'; -- Adjust Brightness
 	signal Bright : integer := 110; -- Brightness value %
 	signal clk : std_logic := '0';
-	signal RESULT : matrix;
-	
-	
-
-	
+	signal RES : matrix;
+	signal RES_W: integer;
+    signal RES_H: integer;
 	
 	constant clk_time : time := 50 ns;
 	constant path_normal : string := "testbench/smallimage.txt";
@@ -95,10 +117,8 @@ architecture tb_arch of tb is
 	constant path_mirrorX : string := "testbench/small_mirrorX.txt";
 	constant path_mirrorY : string := "testbench/small_mirrorY.txt";
 	
-	
-	
 begin
-		UUT: SimpleImageAugmenter port map (Rd, Wr, Mx, My, Rt, AdBr, Bright, clk, RESULT);
+		UUT: SimpleImageAugmenter port map (Rd, Wr, Mx, My, Rt, AdBr, Bright, clk, RES, RES_W, RES_H);
 		
 		clock: process
 		variable end_time : time := 1000 ns;
@@ -116,24 +136,25 @@ begin
 		end process;
 		
 		test: process
-			variable PATH_toTest: line;
-			variable COR_IMG : matrix;
-			variable COR_W: integer;
-			variable COR_H: integer;
+			variable TST_IMG : matrix;
+			variable TST_W : integer;
+			variable TST_H : integer;
+			variable COR_PATH : line;
 		begin
 			-- TEST: readImage
 			Rd <= '1';
 			wait for clk_time;
 			Rd <= '0';
-			wait for clk_time;
-			Wr <= '1';
-			wait for clk_time;
-			Wr <= '0';
-			wait for clk_time;
-			PATH_toTest := new string'("");
-			write(PATH_toTest, path_normal);
-			readImage(PATH_toTest, COR_IMG, COR_W, COR_H);
-			tb_arch.verify(RESULT, COR_IMG, COR_W, COR_H);
+			wait for 2*clk_time;			
+			
+			TST_IMG := RES; 
+			TST_H := RES_H; 
+			TST_W := RES_W;
+			
+			COR_PATH := new string'("");
+			write(COR_PATH, path_normal);
+			
+			tb_arch.verify(TST_IMG, TST_W, TST_H, COR_PATH);
 			
 			--TEST: 
 			
