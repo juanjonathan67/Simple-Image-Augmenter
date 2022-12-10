@@ -36,8 +36,8 @@ package SimpleImageAugmenter_functions is
     );
         
     procedure rotate(
-        constant wdth : in integer;
-        constant height : in integer;
+        signal wdth : inout integer;
+        signal height : inout integer;
         signal Img : inout matrix
     );
     
@@ -52,7 +52,7 @@ package body SimpleImageAugmenter_functions is
         variable read_line : line;
         variable red, green, blue : integer;
         variable spaces : character;
-        variable wdth, height : integer;
+        variable wdth, height : integer; 
     begin
         file_open(input_buf, "testbench/smallimage.txt", read_mode);
         -- Read width and height at first row
@@ -216,11 +216,12 @@ package body SimpleImageAugmenter_functions is
     -- end procedure;
 
     procedure rotate(
-        constant wdth : in integer;
-        constant height : in integer;
+        signal wdth : inout integer;
+        signal height : inout integer;
         signal Img : inout matrix
     )
     is 
+		variable tmp : integer;
     begin
 		for i in 1 to height loop
 			for j in 1 to  wdth loop
@@ -229,5 +230,8 @@ package body SimpleImageAugmenter_functions is
 				Img(j - 1, height - i, 0) <= Img(i - 1, j - 1, 0);
 			end loop;
 		end loop;
+		tmp := wdth;
+		wdth <= height;
+		height <= tmp;	
     end procedure rotate; 
 end package body SimpleImageAugmenter_functions;

@@ -593,3 +593,47 @@
 # End of Stack Trace
 
 
+# Current time Fri Dec  9 22:58:46 2022
+# ModelSim - Intel FPGA Edition Stack Trace
+# Program = vsim
+# Id = "2020.1"
+# Version = "2020.02"
+# Date = "Feb 28 2020"
+# Platform = "linuxaloem"
+# Signature = fa4d3e95ccc4dcaa70644b276588aa2d
+# 0    0x085a18d0: '<unknown (@0x85a18d0)>'
+# 1    0x085ac080: '<unknown (@0x85ac080)>'
+# 2    0x085acc6f: '<unknown (@0x85acc6f)>'
+# 3    0x085ace50: '<unknown (@0x85ace50)>'
+# 4    0x085ace50: '<unknown (@0x85ace50)>'
+# 5    0x085afcfe: '<unknown (@0x85afcfe)>'
+# 6    0x085b19ab: '<unknown (@0x85b19ab)>'
+# 7    0x085b9f7d: '<unknown (@0x85b9f7d)>'
+# 8    0x085ba661: '<unknown (@0x85ba661)>'
+# 9    0xf6859bed: '/home/airev/Kuliah/PSD/Simple-Image-Augmenter/VHDL/SimpleImageAugmenter_tb.vhd:110'
+# 10   0x0831cfd9: '<unknown (@0x831cfd9)>'
+# 11   0x085e8c15: '<unknown (@0x85e8c15)>'
+# 12   0x085d28ed: '<unknown (@0x85d28ed)>'
+# 13   0x085d394d: '<unknown (@0x85d394d)>'
+# 14   0x087ccea3: '<unknown (@0x87ccea3)>'
+# 15   0x08a0d40d: '<unknown (@0x8a0d40d)>'
+# 16   0x087cd1b6: '<unknown (@0x87cd1b6)>'
+# 17   0x08a9a3b9: '<unknown (@0x8a9a3b9)>'
+# 18   0x092365cb: '<unknown (@0x92365cb)>'
+# 19   0x09235bba: '<unknown (@0x9235bba)>'
+# 20   0x0923b143: '<unknown (@0x923b143)>'
+# 21   0x0923b25a: '<unknown (@0x923b25a)>'
+# 22   0x0923c901: '<unknown (@0x923c901)>'
+# 23   0x0923cc76: '<unknown (@0x923cc76)>'
+# 24   0x08d20173: '<unknown (@0x8d20173)>'
+# 25   0x092e4977: '<unknown (@0x92e4977)>'
+# 26   0x0933ec3c: '<unknown (@0x933ec3c)>'
+# 27   0x09341a98: '<unknown (@0x9341a98)>'
+# 28   0x092fde68: '<unknown (@0x92fde68)>'
+# 29   0x092fe175: '<unknown (@0x92fe175)>'
+# 30   0x090ec6c0: '<unknown (@0x90ec6c0)>'
+# 31   0x0879fb79: '<unknown (@0x879fb79)>'
+# 32   0x0863aebb: '<unknown (@0x863aebb)>'
+# End of Stack Trace
+
+
