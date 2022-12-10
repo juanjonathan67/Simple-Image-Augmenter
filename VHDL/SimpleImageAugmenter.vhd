@@ -24,22 +24,6 @@ entity SimpleImageAugmenter is
 end entity SimpleImageAugmenter;
 
 architecture rtl of SimpleImageAugmenter is
-    -- component ImageReader is
-    --     port (
-    --         Rd : in std_logic;
-    --         Img : out matrix;
-    --         w, h : out Integer
-    --     );
-    -- end component ImageReader;
-
-    -- component ImageWriter is
-    --     port (
-    --         wdth, height : in integer;
-    --         Done : in std_logic;
-    --         Img : in matrix
-    --     );
-    -- end component ImageWriter;
-
     signal Img : matrix;
     signal w, h : integer := 0;
     signal present, nxt : state_types;
@@ -59,72 +43,71 @@ begin
     process (Rd, Wr, Mx, My, Rt, AdBr, Bright, clk) is
     variable tmp: integer;
     begin
-		inputs <= Rd & Mx & My & Rt & AdBr & Wr;
-		case present is
-			when S0 => -- Wait for Input
-					
-				if(inputs = "100000") then
-					nxt <= S1;
-				elsif(inputs = "010000") then
-					nxt <= S2;
-				elsif(inputs = "001000") then
-					nxt <= S3;
-				elsif(inputs = "000100") then
-					nxt <= S4;
-				elsif(inputs = "000010") then
-					nxt <= S5;
-				elsif(inputs = "000001") then
-					nxt <= S6;
-				else
-					nxt <= present;
-				end if;
-				
-			when S1 => -- Read Image
-				if(Rd = '0' and rising_edge(clk)) then
-					readImage(Img, w, h);
-					nxt <= S0;	
-				end if;
-				
-			when S2 => -- Mirror X
-				if(Mx = '0' and rising_edge(clk)) then
-					mirrorX(w, h, Img);
-					nxt <= S0;
-				end if;
-				
-			when S3 => -- Mirror Y
-				if(My = '0' and rising_edge(clk)) then
-					mirrorY(w, h, Img);
-					nxt <= S0;
-				end if;
-				
-			when S4 => -- Rotate
-				if(Rt = '0' and rising_edge(clk)) then
-					rotate(w, h, Img);
-					nxt <= S0;
-				end if;
-				
-			when S5 => -- Add Brightness
-				if(AdBr = '0' and rising_edge(clk)) then
-					adjustBrightness(Bright, w, h, Img);
-					adjustBrightness(100, w, h, Img);					
-					nxt <= S0;
-				end if;
-				
-			when S6 => -- Write Image
-				if(Wr = '0' and rising_edge(clk)) then
-					writeImage(w, h, Img);
-					nxt <= S0;
-				end if;
-				
-			when others => -- Default state
-				nxt <= present;
-		end case;
-		
-		
-		-- TB-related
-		RES <= Img;
-		RES_W <= w;
-		RES_H <= h;
-					
+      inputs <= Rd & Mx & My & Rt & AdBr & Wr;
+      case present is
+        when S0 => -- Wait for Input
+
+          if(inputs = "100000") then
+            nxt <= S1;
+          elsif(inputs = "010000") then
+            nxt <= S2;
+          elsif(inputs = "001000") then
+            nxt <= S3;
+          elsif(inputs = "000100") then
+            nxt <= S4;
+          elsif(inputs = "000010") then
+            nxt <= S5;
+          elsif(inputs = "000001") then
+            nxt <= S6;
+          else
+            nxt <= present;
+          end if;
+
+        when S1 => -- Read Image
+          if(Rd = '0' and rising_edge(clk)) then
+            readImage(Img, w, h);
+            nxt <= S0;	
+          end if;
+
+        when S2 => -- Mirror X
+          if(Mx = '0' and rising_edge(clk)) then
+            mirrorX(w, h, Img);
+            nxt <= S0;
+          end if;
+
+        when S3 => -- Mirror Y
+          if(My = '0' and rising_edge(clk)) then
+            mirrorY(w, h, Img);
+            nxt <= S0;
+          end if;
+
+        when S4 => -- Rotate
+          if(Rt = '0' and rising_edge(clk)) then
+            rotate(w, h, Img);
+            nxt <= S0;
+          end if;
+
+        when S5 => -- Add Brightness
+          if(AdBr = '0' and rising_edge(clk)) then
+            adjustBrightness(Bright, w, h, Img);
+            adjustBrightness(100, w, h, Img);					
+            nxt <= S0;
+          end if;
+
+        when S6 => -- Write Image
+          if(Wr = '0' and rising_edge(clk)) then
+            writeImage(w, h, Img);
+            nxt <= S0;
+          end if;
+
+        when others => -- Default state
+          nxt <= present;
+      end case;
+
+
+      -- TB-related
+      RES <= Img;
+      RES_W <= w;
+      RES_H <= h;
     end process;
 end architecture;
