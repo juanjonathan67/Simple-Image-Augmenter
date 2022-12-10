@@ -24,22 +24,6 @@ entity SimpleImageAugmenter is
 end entity SimpleImageAugmenter;
 
 architecture rtl of SimpleImageAugmenter is
-    -- component ImageReader is
-    --     port (
-    --         Rd : in std_logic;
-    --         Img : out matrix;
-    --         w, h : out Integer
-    --     );
-    -- end component ImageReader;
-
-    -- component ImageWriter is
-    --     port (
-    --         wdth, height : in integer;
-    --         Done : in std_logic;
-    --         Img : in matrix
-    --     );
-    -- end component ImageWriter;
-
     signal Img : matrix;
     signal w, h : integer := 0;
     signal present, nxt : state_types;
@@ -62,24 +46,6 @@ begin
         inputs <= Rd & Mx & My & Rt & AdBr & Wr;
         case present is
             when S0 => -- Wait for Input
-                -- if(Rd = '1') then
-                --     nxt <= S1;
-                -- elsif(Mx = '1') then
-                --     nxt <= S2;
-                -- elsif(My = '1') then
-                --     nxt <= S3;
-                -- elsif(Rt = '1') then
-                --     nxt <= S4;
-                -- elsif(AdBr = '1') then
-                --     nxt <= S5;
-                -- elsif(Wr = '1') then
-                --     nxt <= S6;
-                -- else
-                --     nxt <= present;
-                -- end if;
-                
-                
-                
                 if(inputs = "100000") then
                     nxt <= S1;
                 elsif(inputs = "010000") then
