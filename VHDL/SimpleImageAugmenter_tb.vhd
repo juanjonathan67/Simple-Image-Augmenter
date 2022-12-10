@@ -222,7 +222,7 @@ begin
 		UUT: SimpleImageAugmenter port map (Rd, Wr, Mx, My, Rt, AdBr, Bright, clk, RES, RES_W, RES_H);
 		
 		clock: process
-		variable end_time : time := 1500 ns;
+		variable end_time : time := 2000 ns;
 		variable current_time : time := 0 ns;
 		begin
 			while current_time < end_time loop
