@@ -180,41 +180,6 @@ package body SimpleImageAugmenter_functions is
         end loop;
     end procedure mirrorY;
 
-    -- procedure adjustBrightness (
-    --     constant bright : in integer range 0 to 200;
-    --     constant wdth : in integer;
-    --     constant height : in integer;
-    --     signal Img : inout matrix
-    -- ) is
-    --     variable temp : RGB;
-    -- begin
-    --     for i in 1 to height loop
-    --         for j in 1 to wdth loop
-    --             if(RGB(2) = 0) then
-    --                 RGB(2) := 1;
-    --             end if;
-    --             if(RGB(2) = 0) then
-    --                 RGB(2) := 1;
-    --             end if;
-    --             if(RGB(2) = 0) then
-    --                 RGB(2) := 1;
-    --             end if;
-    --             RGB(2) := Img(i - 1, j - 1, 2) * bright / 100;
-    --             RGB(1) := Img(i - 1, j - 1, 1) * bright / 100;
-    --             RGB(0) := Img(i - 1, j - 1, 0) * bright / 100;
-    --             if(RGB(2) > 255) then
-    --                 RGB(2) := 255;
-    --             end if;
-    --             if(RGB(1) > 255) then
-    --                 RGB(1) := 255;
-    --             end if;
-    --             if(RGB(0) > 255) then
-    --                 RGB(0) := 255;
-    --             end if;
-    --         end loop;
-    --     end loop;
-    -- end procedure;
-
     procedure rotate(
         signal wdth : inout integer;
         signal height : inout integer;
