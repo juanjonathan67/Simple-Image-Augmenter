@@ -1,17 +1,10 @@
-# Compile of ImageReader.vhd failed with 3 errors.
-# Compile of ImageWriter.vhd failed with 3 errors.
-# Compile of SimpleImageAugmenter.vhd failed with 6 errors.
-# Compile of SimpleImageAugmenter_functions.vhd failed with 3 errors.
-# Compile of SimpleImageAugmenter_tb.vhd failed with 6 errors.
-# Compile of TypeDeclarations.vhd was successful.
-# 6 compiles, 5 failed with 21 errors.
 # Compile of ImageReader.vhd was successful.
 # Compile of ImageWriter.vhd was successful.
-# Compile of SimpleImageAugmenter.vhd failed with 3 errors.
+# Compile of SimpleImageAugmenter.vhd was successful.
 # Compile of SimpleImageAugmenter_functions.vhd was successful.
 # Compile of SimpleImageAugmenter_tb.vhd was successful.
 # Compile of TypeDeclarations.vhd was successful.
-# 6 compiles, 1 failed with 3 errors.
+# 6 compiles, 0 failed with no errors.
 # Compile of ImageReader.vhd was successful.
 # Compile of ImageWriter.vhd was successful.
 # Compile of SimpleImageAugmenter.vhd was successful.
