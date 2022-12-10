@@ -65,11 +65,9 @@ begin
             when S1 => -- Read Image
                 if(Rd = '0') then
                     readImage(Img, w, h);
-                    
                     RES <= Img;
-					RES_W <= w;
-					RES_H <= h;
-                    
+		    RES_W <= w;
+		    RES_H <= h;
                     nxt <= S0;	
                 end if;
                 
