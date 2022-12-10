@@ -50,13 +50,19 @@ Compile Steps (ModelSim) :
 ## Test Results
 
 Synthesize (Cyclone V) :
+
 ![alt text](https://github.com/juanjonathan67/Simple-Image-Augmenter/blob/main/ReadMe/Synthesize.png?raw=true)
 
+
 Waveform (ModelSim) : 
+
 ![alt text](https://github.com/juanjonathan67/Simple-Image-Augmenter/blob/main/ReadMe/TestBench.png?raw=true)
 
+
 Example : 
+
 ![alt text](https://github.com/juanjonathan67/Simple-Image-Augmenter/blob/main/ReadMe/Augmented.png?raw=true)
+
 The images were checked using the augmentation software, and no differences were found. The normal image is shown in the top left, the X-mirrored image is in the middle left, the Y-mirrored image is in the bottom left, and the rotated image is on the right.
 
-For more information, see our report in this project 
+For more information, see our [report](https://github.com/juanjonathan67/Simple-Image-Augmenter/blob/main/Laporan%20Proyek%20Akhir%20PSD%20-%20MA%20B5.pdf) in this project 
